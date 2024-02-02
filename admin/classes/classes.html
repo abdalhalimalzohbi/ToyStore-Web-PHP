@@ -1,0 +1,381 @@
+<script>
+  function add_class() {
+    var name = document.getElementById("class_name").value;
+    var capacity = document.getElementById("capacity").value;
+
+    var formData = {
+      name: name,
+      capacity: capacity,
+    };
+    var url = "../api/add_class.php";
+    console.log(url);
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+      dataType: "json",
+      success: function (response) {
+        console.log(response);
+        if (response.status === "success") {
+          location.reload();
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
+        // Display an error message in case of AJAX failure
+        $("#responseMsg").text("AJAX Error: " + errorThrown);
+      },
+    });
+  }
+  function save_class(id){
+    var name=document.getElementById("class_name1").value;
+    var capacity=document.getElementById("capacity1").value;
+    var id=id;
+    //alert(id);
+  
+    var formData = {
+      id: id,
+      name: name,
+      capacity: capacity,
+    };
+
+    var url = "../api/save_class.php";
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: formData,
+      dataType: "json",
+      success: function (response) {       
+        console.log(response);
+        if (response.status === "success") {
+          location.reload();
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
+      },
+    });
+  }
+  function getclassbyid(obj) {
+    var id = obj.id;
+    var formData = {
+      id: id,
+    };
+    var url = "../api/getclassbyid.php";
+    $.ajax({
+      type: "GET",
+      url: url,
+      data: formData,
+      dataType: "json",
+      success: function (response) {
+      console.log(response);  
+      var classes = response.class;
+      document.getElementById("class_name1").value=classes["code"];
+      document.getElementById("capacity1").value=classes["cap"];
+      document.getElementById("click").setAttribute("onclick", `save_class(${id})`);
+      //alert (id);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
+      },
+    });
+  }
+  var classes_array=[];
+  function get_classes() {
+    var url = "../api/get_classes.php";
+    $.ajax({
+      type: "GET",
+      url: url,
+      data: {},
+      dataType: "json",
+      success: function (response) {
+        
+        console.log(response);
+        classes_array=response.classes;
+        var classes = response.classes;
+        // console.log(classes_array[0]["students"][0]["fullname"]);
+        
+        for (var i = 0; i < classes.length; i++) {
+         // alert(classes[i]["students"][0]["fullname"]);
+          console.log(classes[i]);
+          var coldiv = document.createElement("div");
+          coldiv.style.backgroundColor=classes[i]['color'];
+          coldiv.setAttribute("class", "col-md-4");
+          coldiv.classList.add("class_div");
+          coldiv.innerHTML = "Name: " + classes[i]["code"];
+
+          var par = document.createElement("p");
+          par.innerHTML = "capacity: " + classes[i]["cap"];
+          coldiv.appendChild(par);
+
+          var space = document.createElement("p");
+          space.innerHTML = "you should take: \n"+classes[i]["price"]+"$";
+          coldiv.appendChild(space);
+
+
+
+          var btndelete = document.createElement("button");
+          btndelete.innerHTML = "delete";
+          btndelete.setAttribute("id", classes[i]["id"]);
+          btndelete.setAttribute("class", "btn btn-danger");
+          btndelete.setAttribute("onclick", "delete_class(this)");
+          coldiv.appendChild(btndelete);
+
+          var space = document.createElement("span");
+          space.innerHTML = "&nbsp;&nbsp;";
+          coldiv.appendChild(space);
+
+          var btnedit = document.createElement("button");
+          btnedit.innerHTML = "edit";
+          btnedit.setAttribute("id", classes[i]["id"]);
+          btnedit.setAttribute("class", "btn btn-primary");
+          btnedit.setAttribute("data-toggle", "modal");
+          btnedit.setAttribute("data-target", "#edit_class");
+          btnedit.setAttribute("onclick", "getclassbyid(this)");
+          coldiv.appendChild(btnedit);
+
+          var space = document.createElement("span");
+          space.innerHTML = "&nbsp;&nbsp;";
+          coldiv.appendChild(space);
+
+          var show = document.createElement("button");
+          show.innerHTML = "show";
+          show.setAttribute("id", classes[i]["id"]);
+          show.setAttribute("class", "btn btn-primary");
+        // show.setAttribute("data-toggle", "modal");
+        //  show.setAttribute("data-target", "#show_class");
+          show.setAttribute("onclick", "show_stu(this)");
+          coldiv.appendChild(show);
+
+          document.getElementById("data").appendChild(coldiv);
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(errorThrown);
+      }, 
+    });
+  }
+  function delete_class(obj) {
+    var text = "Press a button!\nEither OK or Cancel.";
+    if (confirm(text) == false) {return; alert("abd");}
+  
+    else {
+      var id = obj.id;
+      var formData = {
+        id: id,
+      };
+      var url = "../api/delete_class.php";
+      console.log(url);
+      $.ajax({
+        type: "GET",
+        url: url,
+        data: formData,
+        dataType: "json",
+        success: function (response) {
+          console.log(response);
+          if (response.status === "success") {
+            location.reload();
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(errorThrown);
+          // Display an error message in case of AJAX failure
+          $("#responseMsg").text("AJAX Error: " + errorThrown);
+        },
+      });
+    }
+  }
+  function show_stu(obj){
+    document.getElementById("tb").innerHTML="";
+    for(var i=0;i<classes_array.length;i++){
+
+      if(classes_array[i]["id"]==obj.id){
+        for(var j=0;j<classes_array[i]["students"].length;j++){
+
+          var tr=document.createElement("tr");
+
+          var td1=document.createElement("td");
+          var b = classes_array[i]["students"][j]["id"];
+          var aa=document.createElement("button");
+          aa.innerHTML="edit";
+          aa.setAttribute("class", "btn btn-primary");
+          aa.addEventListener("click", function() { 
+        window.location.href = "./index.php?page=editstudent&id=" + b;
+    });
+          td1.appendChild(aa);
+
+          var space = document.createElement("span");
+          space.innerHTML = "&nbsp;&nbsp;";
+
+          td1.appendChild(space);
+
+          var bb=document.createElement("button");
+          bb.setAttribute("class", "btn btn-danger");
+          bb.innerHTML="delete";
+
+          bb.addEventListener("click", function() { 
+        window.location.href = "./index.php?page=deletestudent&id=" + b;
+    });
+          td1.appendChild(bb);
+        
+        tr.appendChild(td1);
+
+        var td2=document.createElement("td");
+        td2.innerHTML=classes_array[i]["students"][j]["fullname"];
+        tr.appendChild(td2);
+        var td3=document.createElement("td");td3.innerHTML=classes_array[i]["students"][j]["phone"];tr.appendChild(td3);
+        var td4=document.createElement("td");td4.innerHTML=classes_array[i]["students"][j]["email"];tr.appendChild(td4);
+        var td5=document.createElement("td");td5.innerHTML=classes_array[i]["students"][j]["educ_level"];tr.appendChild(td5);
+        var td6=document.createElement("td");td6.innerHTML=classes_array[i]["students"][j]["age"];tr.appendChild(td6);
+        var td7=document.createElement("td");td7.innerHTML=classes_array[i]["students"][j]["address"];tr.appendChild(td7);
+        document.getElementById("tb").appendChild(tr);
+        }
+      }
+    }
+    document.getElementById('openstudentbtn').click();
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    get_classes();
+  });
+
+</script>
+<button id="openstudentbtn" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#show_class">
+  add new
+ </button>
+ <style>
+
+.modal.in .modal-dialog {
+    position: absolute;
+    top: 5%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+
+ </style>
+<div class="modal" id="show_class">
+  <div class="modal-dialog">
+    <div id="lol" class="modal-content" style="width: 1181px;">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+          <thead>
+              <tr>
+                  <th>edit</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>education level</th>
+                  <th>Age</th>
+                  <th>Address</th>   
+              </tr>
+          </thead>
+          <tbody id="tb">
+            <tr>
+      
+            </tr>
+          </tbody>
+          </table>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="add_class">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <label>name</label>
+          <input type="text" id="class_name" class="form-control" placeholder="write the name of class"/>
+          <br />
+          <label>capacity</label>
+          <input type="text" id="capacity" class="form-control" placeholder="enter the capacity of the class"/>
+      
+          <button onclick="add_class()" class="btn btn-primary form-control">Add Class</button>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="edit_class">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <label>name</label>
+          <input type="text" id="class_name1" class="form-control" placeholder="write the name of class"/>
+          <br />
+          <label>capacity</label>
+          <input type="text" id="capacity1" class="form-control" placeholder="enter the capacity of the class"/>
+      
+          <button id="click"  class="btn btn-primary form-control">save Class</button>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_class">add class</button>
+
+<div class="container">
+  <div class="row" id="data"></div>
+</div>
+
+<style>
+  .class_div {
+    padding: 15px;
+    background: #80808069;
+    border-radius: 15px;
+    color: black;
+    margin: 5px;
+  }
+
+  .col-md-4 {
+    width: 32.4%;
+  }
+</style>
