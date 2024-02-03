@@ -38,6 +38,32 @@
       </div>
    </div>
 </div>
+<style>
+/* Custom styles for small screens */
+/* Custom styles for small screens */
+
+@media only screen and (max-width: 767px) {
+  .box_main {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+  }
+
+  .btn_main {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the bottom of the container */
+    margin-top: auto; /* Push buttons to the bottom even if there's extra space */
+  }
+
+  .buy_bt button,
+  .seemore_bt a {
+    font-size: 12px;
+  }
+}
+
+
+
+</style>
 <script>
    function addtocart(obj) {
       const gameName = obj['name'];

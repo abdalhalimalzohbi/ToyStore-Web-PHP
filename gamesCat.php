@@ -17,7 +17,7 @@
 
                      // for ($i = 0; $i < 40; $i++) { 
                   ?>
-                     <div class="col-md-3">
+                     <div class="col-6 col-md-3">
                         <div class="box_main">
                            <h4 class="shirt_text">Man T -shirt</h4>
                            <p class="price_text">Price <span style="color: #262626;">$ <?php echo $gamerow['newprice'];?></span></p>
@@ -163,3 +163,29 @@
       getcart();
    });
 </script>
+<style>
+/* Custom styles for small screens */
+/* Custom styles for small screens */
+
+@media only screen and (max-width: 767px) {
+  .box_main {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+  }
+
+  .btn_main {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the bottom of the container */
+    margin-top: auto; /* Push buttons to the bottom even if there's extra space */
+  }
+
+  .buy_bt button,
+  .seemore_bt a {
+    font-size: 12px;
+  }
+}
+
+
+
+</style>

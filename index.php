@@ -238,8 +238,7 @@
             </div>
          </div>
       </div>
-   </div> <!-- banner bg main end -->
-   <!-- fashion section start -->
+   </div> 
 
    <?php
 
@@ -264,18 +263,7 @@
    <div id="scroll-to-top" onclick="scrollToTop()">
       <span>&uarr;</span>
    </div>
-   <!-- jewellery  section end -->
 
-   <!-- contact section -->
-
-   <!-- end contact section -->
-
-
-   <!-- end info section -->
-
-   <!-- footer section -->
-   <!-- footer section -->
-   <!-- footer section start -->
    <div class="footer_section layout_padding">
       <div class="container">
          <div class="footer_logo"><a href="index.php"><img src="images/footer-logo.png"></a></div>
@@ -295,21 +283,17 @@
          <div class="location_main">Help Line Number : <a href="#">+1 1800 1200 1200</a></div>
       </div>
    </div>
-   <!-- footer section end -->
-   <!-- copyright section start -->
    <div class="copyright_section">
       <div class="container">
          <p class="copyright_text">© 2024 All Rights Reserved. Developed by <a href="mailto:abdalhalimalzohbi@gmail.com">Mr.AbdalhalimAlzohbi</a></p>
       </div>
    </div>
-   <!-- copyright section end -->
-   <!-- Javascript files-->
+
    <script src="js/jquery.min.js"></script>
    <script src="js/popper.min.js"></script>
    <script src="js/bootstrap.bundle.min.js"></script>
    <script src="js/jquery-3.0.0.min.js"></script>
    <script src="js/plugin.js"></script>
-   <!-- sidebar -->
    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
    <script src="js/custom.js"></script>
    <script>
