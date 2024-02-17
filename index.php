@@ -83,7 +83,6 @@
                   </div>
                </div>
                <div class="main">
-                  <!-- Another variation with a button -->
                   <div class="input-group">
                      <input type="text" class="form-control" placeholder="Search (Keywords,etc)" id="searchInput">
                      <div class="input-group-append">
@@ -113,9 +112,6 @@
             window.location.href = "./index.php?search=" + encodeURIComponent(searchTerm);
          }
       </script>
-
-      <!-- header section end -->
-      <!-- banner section start -->
 
       <div class="banner_section layout_padding">
          <div class="container">
@@ -157,7 +153,6 @@
          </div>
       </div>
 
-      <!-- banner section end -->
    </div>
    <style>
       
@@ -169,7 +164,6 @@
          font: inherit;
          cursor: pointer;
          outline: inherit;
-         /* Additional styling if needed */
       }
    </style>
 
@@ -394,18 +388,15 @@
 
                aboudElement.appendChild(x);
 
-               // Update the cumulative total
                totalOfAllSubtotals += parseFloat(e.innerHTML);
             }
 
-            // Display the total of all subtotals
             var totalElement = document.createElement("div");
             totalElement.id = "totalDisplay";
             totalElement.innerHTML = "Total of All Subtotals: $" + totalOfAllSubtotals.toFixed(2);
             aboudElement.appendChild(totalElement);
 
 
-            // Add event listener to the parent element using event delegation
             aboudElement.addEventListener('input', function(event) {
                   updateTotal(event.target.parentNode.parentNode);
                
@@ -418,7 +409,6 @@
             var subtotal = calculateTotal(price, inputValue);
             rowElement.querySelector("td:nth-child(5)").innerHTML = subtotal;
 
-            // Recalculate the total of all subtotals
             totalOfAllSubtotals = calculateTotalOfAllSubtotals();
             updateTotalDisplay();
          }
@@ -437,7 +427,6 @@
          }
 
          function updateTotalDisplay() {
-            // Update the displayed total of all subtotals
             var totalDisplayElement = document.getElementById("totalDisplay");
             if (totalDisplayElement) {
                totalDisplayElement.innerHTML = "Total of All Subtotals: $" + totalOfAllSubtotals.toFixed(2);

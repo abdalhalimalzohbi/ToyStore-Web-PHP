@@ -54,6 +54,9 @@ if (isset($_SESSION["session_user_id"])) {
               <a href="./index.php?page=product"><i class="fa fa-table fa-3x"></i>Products</a>
             </li>
             <li>
+              <a href="./index.php?page=form"><i class="fa fa-table fa-3x"></i>form</a>
+            </li>
+            <li>
               <a href="./index.php?page=logout"><i class="fa fa-table fa-3x"></i>logout</a>
             </li>
           </ul>
@@ -75,9 +78,11 @@ if (isset($_SESSION["session_user_id"])) {
             include_once "./products/saveProduct.php";
           } elseif ($page == "updateProduct") {
             include_once "./products/updateProduct.php";
+          } elseif ($page == "form") {
+            include_once "/form.php";
           } elseif ($page == "login") {
             include_once "./login.php";
-          } elseif ($page == "logout") {
+          }elseif ($page == "logout") {
             session_destroy();
             header("location:./login.php");
           } else {

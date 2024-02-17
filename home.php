@@ -12,7 +12,7 @@
                   $resultgame = mysqli_query($connexion, $query_select);
                   while ($gamerow = mysqli_fetch_array($resultgame, MYSQLI_ASSOC)) {
                   ?>
-                     <div class="col-md-3">
+                     <div class="col-6 col-md-3">
                         <div class="box_main">
                            <h4 class="shirt_text"><?php echo $gamerow['name']; ?></h4>
                            <p class="price_text">Price <span style="color: #262626;">$ <?php echo $gamerow['newprice'];?></span></p>
@@ -22,7 +22,8 @@
                               <div class="seemore_bt"><a href="#">See More</a></div>
                            </div>
                         </div>
-                     </div><?php
+                     </div>
+                     <?php
                         }
                            ?>
                </div>
@@ -170,8 +171,6 @@
       </a>
    </div>
 </div>
-<!-- electronic section end -->
-<!-- jewellery  section start -->
 <div class="jewellery_section">
    <div id="jewellery_main_slider" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
@@ -415,18 +414,15 @@
 
             aboudElement.appendChild(x);
 
-            // Update the cumulative total
             totalOfAllSubtotals += parseFloat(e.innerHTML);
          }
 
-         // Display the total of all subtotals
          var totalElement = document.createElement("div");
          totalElement.id = "totalDisplay";
          totalElement.innerHTML = "Total of All Subtotals: $" + totalOfAllSubtotals.toFixed(2);
          aboudElement.appendChild(totalElement);
 
 
-         // Add event listener to the parent element using event delegation
          aboudElement.addEventListener('input', function(event) {
             if (event.target.tagName.toLowerCase() === 'input') {
                updateTotal(event.target.parentNode.parentNode);
@@ -440,7 +436,6 @@
          var subtotal = calculateTotal(price, inputValue);
          rowElement.querySelector("td:nth-child(5)").innerHTML = subtotal;
 
-         // Recalculate the total of all subtotals
          totalOfAllSubtotals = calculateTotalOfAllSubtotals();
          updateTotalDisplay();
       }
@@ -459,7 +454,6 @@
       }
 
       function updateTotalDisplay() {
-         // Update the displayed total of all subtotals
          var totalDisplayElement = document.getElementById("totalDisplay");
          if (totalDisplayElement) {
             totalDisplayElement.innerHTML = "Total of All Subtotals: $" + totalOfAllSubtotals.toFixed(2);
@@ -475,3 +469,28 @@
       getcart();
    });
 </script>
+
+<style>
+
+@media only screen and (max-width: 767px) {
+  .box_main {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+  }
+
+  .btn_main {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: auto; 
+  }
+
+  .buy_bt button,
+  .seemore_bt a {
+    font-size: 12px;
+  }
+}
+
+
+
+</style>

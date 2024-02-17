@@ -1,7 +1,6 @@
 <div class="fashion_section">
    <div id="main_slider" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
-         <!-- <div class="carousel-item active"> -->
          <div class="container">
             <h1 class="fashion_taital"><?php echo ( " games") ?></h1>
             <div class="fashion_section_2">
@@ -17,7 +16,6 @@
                            <h4 class="shirt_text"><?php echo $gamerow['name']; ?></h4>
                            <p class="price_text">Price <span style="color: #262626;">$ <?php echo $gamerow['newprice'];?></span></p>
                            <div class="tshirt_img"><img src="<?php echo "toystore/" . $gamerow['picture']; ?>"></div>
-                           <!-- i enter here a text but it doesnt appear properly -->
                            <div class="btn_main">
                               <div class="buy_bt">
                                  <div class="buy_bt"><button onclick="addtocart(<?php echo htmlspecialchars(json_encode($gamerow), ENT_QUOTES, 'UTF-8'); ?>)">Buy Now</button></div>
@@ -99,18 +97,15 @@
 
             aboudElement.appendChild(x);
 
-            // Update the cumulative total
             totalOfAllSubtotals += parseFloat(e.innerHTML);
          }
 
-         // Display the total of all subtotals
          var totalElement = document.createElement("div");
          totalElement.id = "totalDisplay";
          totalElement.innerHTML = "Total of All Subtotals: $" + totalOfAllSubtotals.toFixed(2);
          aboudElement.appendChild(totalElement);
 
 
-         // Add event listener to the parent element using event delegation
          aboudElement.addEventListener('input', function(event) {
             if (event.target.tagName.toLowerCase() === 'input') {
                updateTotal(event.target.parentNode.parentNode);
@@ -124,7 +119,6 @@
          var subtotal = calculateTotal(price, inputValue);
          rowElement.querySelector("td:nth-child(5)").innerHTML = subtotal;
 
-         // Recalculate the total of all subtotals
          totalOfAllSubtotals = calculateTotalOfAllSubtotals();
          updateTotalDisplay();
       }
@@ -143,7 +137,6 @@
       }
 
       function updateTotalDisplay() {
-         // Update the displayed total of all subtotals
          var totalDisplayElement = document.getElementById("totalDisplay");
          if (totalDisplayElement) {
             totalDisplayElement.innerHTML = "Total of All Subtotals: $" + totalOfAllSubtotals.toFixed(2);
@@ -160,8 +153,7 @@
    });
 </script>
 <style>
-/* Custom styles for small screens */
-/* Custom styles for small screens */
+
 
 @media only screen and (max-width: 767px) {
   .box_main {
@@ -172,8 +164,8 @@
 
   .btn_main {
     display: flex;
-    justify-content: flex-end; /* Align buttons to the bottom of the container */
-    margin-top: auto; /* Push buttons to the bottom even if there's extra space */
+    justify-content: flex-end; 
+    margin-top: auto; 
   }
 
   .buy_bt button,
